@@ -13,7 +13,6 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Fractal Sierpiński',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(),
     );
