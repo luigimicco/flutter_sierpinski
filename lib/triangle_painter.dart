@@ -48,7 +48,7 @@ class TrianglePainter extends CustomPainter {
       canvas.drawPath(
           triangle,
           _paint
-            ..color = Colors.black
+            ..color = _colors[(level % _colors.length)]
             ..style = PaintingStyle.stroke);
       // left
       _drawTriangle(canvas, x1 - base / 2, y1, level - 1, base / 2);
@@ -58,4 +58,15 @@ class TrianglePainter extends CustomPainter {
       _drawTriangle(canvas, x1, y1 - height, level - 1, base / 2);
     }
   }
+
+  final _colors = [
+    Colors.lightGreen,
+    Colors.lightGreenAccent,
+    Colors.blue,
+    Colors.blueAccent,
+    Colors.orange,
+    Colors.orangeAccent,
+    Colors.pink,
+    Colors.pinkAccent,
+  ];
 }
