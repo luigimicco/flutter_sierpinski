@@ -26,10 +26,30 @@ class TrianglePainter extends CustomPainter {
         _paint
           ..color = Colors.black
           ..style = PaintingStyle.stroke);
+
+    _drawTriangle(canvas, xOff + base / 2, yOff + height, level - 1, base / 2);
   }
 
   @override
   bool shouldRepaint(TrianglePainter oldDelegate) {
     return (level != oldDelegate.level);
+  }
+
+  void _drawTriangle(
+      Canvas canvas, double x1, double y1, int level, double base) {
+    if (level > 0) {
+      double height = base * math.sqrt(3 / 4);
+      var triangle = Path();
+      triangle.moveTo(x1, y1);
+      triangle.lineTo(x1 - base / 2, y1 - height);
+      triangle.lineTo(x1 + base / 2, y1 - height);
+      triangle.close();
+
+      canvas.drawPath(
+          triangle,
+          _paint
+            ..color = Colors.black
+            ..style = PaintingStyle.stroke);
+    }
   }
 }
