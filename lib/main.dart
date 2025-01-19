@@ -23,4 +23,24 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {}
+class _MyHomePageState extends State<MyHomePage> {
+  int _level = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Flexible(
+          flex: 1,
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: CustomPaint(
+              painter: TrianglePainter(_level),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
