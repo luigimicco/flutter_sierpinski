@@ -37,7 +37,7 @@ class TrianglePainter extends CustomPainter {
 
   void _drawTriangle(
       Canvas canvas, double x1, double y1, int level, double base) {
-    if (level > 0) {
+    if (level >= 0) {
       double height = base * math.sqrt(3 / 4);
       var triangle = Path();
       triangle.moveTo(x1, y1);
@@ -50,6 +50,12 @@ class TrianglePainter extends CustomPainter {
           _paint
             ..color = Colors.black
             ..style = PaintingStyle.stroke);
+      // left
+      _drawTriangle(canvas, x1 - base / 2, y1, level - 1, base / 2);
+      // right
+      _drawTriangle(canvas, x1 + base / 2, y1, level - 1, base / 2);
+      // top
+      _drawTriangle(canvas, x1, y1 - height, level - 1, base / 2);
     }
   }
 }
