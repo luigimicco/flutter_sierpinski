@@ -27,6 +27,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
+  double _zoom = 1;
   int _level = 0;
   late int maxLevel = 10;
   late int minLevel = 0;
@@ -36,6 +37,9 @@ class _MyHomePageState extends State<MyHomePage>
   late int level = 0;
 
   Tween<double> tLevel = Tween<double>(begin: 0, end: 0);
+
+  late double minZoom = 0.5;
+  late double maxZoom = 3.0;
 
   @override
   void initState() {
@@ -97,12 +101,35 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                 ],
               ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    "Zoom: ",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Expanded(
+                    child: Slider(
+                      min: minZoom,
+                      max: maxZoom,
+                      divisions: (((maxZoom - minZoom) * 100) / 5).toInt(),
+                      label: '${(_zoom * 100).toInt() / 100}',
+                      value: _zoom,
+                      onChanged: (value) {
+                        setState(() {
+                          _zoom = value;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
               Flexible(
                 flex: 1,
                 child: AspectRatio(
                   aspectRatio: 1,
                   child: CustomPaint(
-                    painter: TrianglePainter(_level),
+                    painter: TrianglePainter(_level, _zoom),
                   ),
                 ),
               ),

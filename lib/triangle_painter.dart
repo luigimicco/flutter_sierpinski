@@ -3,14 +3,15 @@ import 'dart:math' as math;
 
 class TrianglePainter extends CustomPainter {
   final int level;
+  final double zoom;
 
-  TrianglePainter(this.level);
+  TrianglePainter(this.level, this.zoom);
 
   Paint _paint = Paint();
 
   @override
   void paint(Canvas canvas, Size size) {
-    double base = math.min(size.width, size.height);
+    double base = math.min(size.width, size.height) * zoom;
     double height = base * math.sqrt(3 / 4);
     double xOff = (size.width - base) / 2;
     double yOff = (size.height - height) / 2;
