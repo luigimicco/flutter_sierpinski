@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'triangle_painter.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -24,7 +26,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _level = 0;
+  int _level = 2;
 
   @override
   Widget build(BuildContext context) {
