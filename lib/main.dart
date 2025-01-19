@@ -25,10 +25,43 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _level = 2;
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
+  int _level = 0;
   late int maxLevel = 10;
   late int minLevel = 0;
+
+  late Animation<double> progress;
+  late AnimationController controller;
+  late int level = 0;
+
+  Tween<double> tLevel = Tween<double>(begin: 0, end: 0);
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AnimationController(
+        duration: const Duration(milliseconds: 1500), vsync: this);
+    final Animation curveAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.easeOut);
+
+    progress = tLevel.animate(curveAnimation as Animation<double>)
+      ..addListener(() => _onProgressChanged(progress.value))
+      ..addStatusListener((status) async {
+        if (status == AnimationStatus.dismissed) {
+          controller.forward();
+        }
+      });
+
+    controller.forward();
+  }
+
+  void _onProgressChanged(double value) {
+    setState(() {
+      _level = value.toInt();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +84,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       min: minLevel.toDouble(),
                       max: maxLevel.toDouble(),
                       divisions: (maxLevel - minLevel),
-                      label: '${_level.round()}',
-                      value: _level.toDouble(),
+                      label: '${level.round()}',
+                      value: level.toDouble(),
                       onChanged: (value) {
                         setState(() {
-                          _level = value.toInt();
+                          level = value.toInt();
+                          tLevel.end = value;
+                          controller.reset();
                         });
                       },
                     ),
